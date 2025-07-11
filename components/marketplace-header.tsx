@@ -1,7 +1,8 @@
 import { Search, Wallet, User, Bell } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { WalletConnectButton } from "@/components/wallet-connect-button"
+import { MockWalletButton } from "@/components/mock-wallet-button"
+import { ContractInfoModal } from "@/components/contract-info-modal"
 
 export function MarketplaceHeader() {
   return (
@@ -42,7 +43,8 @@ export function MarketplaceHeader() {
             <Button variant="ghost" size="icon" className="text-white">
               <Bell className="w-5 h-5" />
             </Button>
-            <WalletConnectButton />
+            <ContractInfoModal />
+            <MockWalletButton />
             <Button variant="ghost" size="icon" className="text-white">
               <User className="w-5 h-5" />
             </Button>

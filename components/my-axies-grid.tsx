@@ -1,99 +1,21 @@
 "use client"
 
 import { useState } from "react"
-import { MyAxieCardEnhanced } from "@/components/my-axie-card-enhanced"
+import { MockMyAxieCard } from "@/components/mock-my-axie-card"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Grid, List, Plus } from "lucide-react"
-
-const myAxies = [
-  {
-    id: 1,
-    name: "Thunder Beast #4521",
-    image: "/images/axies/beast-thunder.png",
-    class: "Beast",
-    hp: 57,
-    speed: 35,
-    skill: 31,
-    morale: 44,
-    breed: "2/7",
-    purity: 6,
-    isListed: false,
-    listedPrice: null,
-    lastBattleWon: true,
-    exp: 1250,
-  },
-  {
-    id: 2,
-    name: "Aqua Guardian #7832",
-    image: "/images/axies/aqua-guardian.png",
-    class: "Aquatic",
-    hp: 59,
-    speed: 39,
-    skill: 35,
-    morale: 27,
-    breed: "0/7",
-    purity: 5,
-    isListed: true,
-    listedPrice: "0.032",
-    lastBattleWon: false,
-    exp: 890,
-  },
-  {
-    id: 3,
-    name: "Plant Tank #2156",
-    image: "/images/axies/plant-tank.png",
-    class: "Plant",
-    hp: 61,
-    speed: 31,
-    skill: 31,
-    morale: 41,
-    breed: "1/7",
-    purity: 6,
-    isListed: false,
-    listedPrice: null,
-    lastBattleWon: true,
-    exp: 2100,
-  },
-  {
-    id: 4,
-    name: "Sky Striker #9043",
-    image: "/images/axies/bird-striker.png",
-    class: "Bird",
-    hp: 27,
-    speed: 67,
-    skill: 35,
-    morale: 35,
-    breed: "3/7",
-    purity: 4,
-    isListed: false,
-    listedPrice: null,
-    lastBattleWon: true,
-    exp: 1750,
-  },
-]
+import { useNFT } from "@/contexts/nft-context"
 
 export function MyAxiesGrid() {
-  const [axies, setAxies] = useState(myAxies)
-
-  const handleListForSale = (axieId: number, price: string) => {
-    setAxies((prev) =>
-      prev.map((axie) => (axie.id === axieId ? { ...axie, isListed: true, listedPrice: price } : axie)),
-    )
-  }
-
-  const handleRemoveFromSale = (axieId: number) => {
-    setAxies((prev) =>
-      prev.map((axie) => (axie.id === axieId ? { ...axie, isListed: false, listedPrice: null } : axie)),
-    )
-  }
+  const { userNFTs } = useNFT()
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <h1 className="text-2xl font-bold text-white">My Axies</h1>
-          <span className="text-white/70">{axies.length} Axies</span>
+          <span className="text-white/70">{userNFTs.length} Axies</span>
         </div>
 
         <div className="flex items-center space-x-4">
@@ -126,15 +48,29 @@ export function MyAxiesGrid() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-        {axies.map((axie) => (
-          <MyAxieCardEnhanced
+        {userNFTs.map((axie) => (
+          <MockMyAxieCard
             key={axie.id}
             axie={axie}
-            onListForSale={handleListForSale}
-            onRemoveFromSale={handleRemoveFromSale}
           />
         ))}
       </div>
+
+      {userNFTs.length === 0 && (
+        <div className="text-center py-12">
+          <div className="text-white/50 mb-4">
+            <div className="w-16 h-16 bg-white/10 rounded-full mx-auto mb-4 flex items-center justify-center">
+              <Plus className="w-8 h-8" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">No Axies Yet</h3>
+            <p className="text-sm">Purchase your first Axie from the marketplace to get started!</p>
+          </div>
+          <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700">
+            <Plus className="w-4 h-4 mr-2" />
+            Browse Marketplace
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
