@@ -1,6 +1,7 @@
 import { Search, Wallet, User, Bell } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { WalletConnectButton } from "@/components/wallet-connect-button"
 
 export function MarketplaceHeader() {
   return (
@@ -41,10 +42,7 @@ export function MarketplaceHeader() {
             <Button variant="ghost" size="icon" className="text-white">
               <Bell className="w-5 h-5" />
             </Button>
-            <Button className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700">
-              <Wallet className="w-4 h-4 mr-2" />
-              Connect Wallet
-            </Button>
+            <WalletConnectButton />
             <Button variant="ghost" size="icon" className="text-white">
               <User className="w-5 h-5" />
             </Button>
